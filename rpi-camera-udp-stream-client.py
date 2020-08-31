@@ -7,7 +7,7 @@ import numpy as np
 gi.require_version('Gst', '1.0')
 from gi.repository import Gst
 
-
+# Original source https://gist.github.com/patrickelectric/443645bb0fd6e71b34c504d20d475d5a
 class Video():
     """BlueRov video capture class constructor
     Attributes:
@@ -31,19 +31,10 @@ class Video():
         self.port = port
         self._frame = None
 
-        # [Software component diagram](https://www.ardusub.com/software/components.html)
-        # UDP video stream (:5600)
         self.video_source = 'udpsrc port={}'.format(self.port)
-        # [Rasp raw image](http://picamera.readthedocs.io/en/release-0.7/recipes2.html#raw-image-capture-yuv-format)
-        # Cam -> CSI-2 -> H264 Raw (YUV 4-4-4 (12bits) I420)
-        # self.video_codec = '! application/x-rtp, payload=96 ! rtph264depay ! h264parse ! avdec_h264'
         self.video_codec = '! application/x-rtp, payload=96 ! rtpjitterbuffer ! rtph264depay ! avdec_h264'
-        # Python don't have nibble, convert YUV nibbles (4-4-4) to OpenCV standard BGR bytes (8-8-8)
         self.video_decode = \
             '! decodebin ! videoconvert ! video/x-raw,format=(string)BGR ! videoconvert'
-        # Create a sink to get data
-        # self.video_sink_conf = \
-        #     '! appsink emit-signals=true sync=false max-buffers=2 drop=true'
         self.video_sink_conf = \
             '! appsink emit-signals=true sync=false drop=true'
 
