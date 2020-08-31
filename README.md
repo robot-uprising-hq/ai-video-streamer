@@ -13,7 +13,7 @@ Installing Windows 10 client [here](docs/Window-Client-Installation.md)
 
 # Using this repo
 ## Test AI Video Streamer connection
-Check the instruction from [here](Testing-AI-Video-Streamer.md)
+Check the instruction from [here](docs/Testing-AI-Video-Streamer.md)
 
 ## Calculate latency of the video stream
-Check the instruction from [here](Calculate-Latency-of-Video-Stream.md)
+Check the instruction from [here](docs/Calculate-Latency-of-Video-Stream.md)
