@@ -1,6 +1,6 @@
 # Testing AI Video Streamer
 
-This document shows four ways to send and receive video stream from Raspberry Pi Gstreamer
+This document shows four ways to send and receive video stream from Raspberry Pi Gstreamer. Make sure your firewall is not blocking the port used for streaming.
 
 ---
 
