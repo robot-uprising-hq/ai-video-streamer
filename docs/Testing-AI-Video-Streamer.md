@@ -9,12 +9,12 @@ Your router should support multicasting for this to work. In this example the mu
 
 ### Raspberry Pi sending stream
 ```sh
-raspivid -w 1080 -h 1080 -b 25000000 -cd MJPEG -fps 40 -n -t 0 -o - | gst-launch-1.0 -v fdsrc ! "image/jpeg,width=1080,height=1080",framerate=40/1 ! jpegparse ! rtpjpegpay ! udpsink host=224.1.1.1 auto-multicast=true port=5200
+raspivid -w 1080 -h 1080 -b 25000000 -cd MJPEG -fps 40 -n -t 0 -o - | gst-launch-1.0 -v fdsrc ! "image/jpeg,width=1080,height=1080",framerate=40/1 ! jpegparse ! rtpjpegpay ! udpsink host=[MULTICAST-IP-WITHOUT-THESE-BRACKETS] auto-multicast=true port=[PORT-WITHOUT-THESE-BRACKETS]
 ```
 
 ### Client receiving the stream
 ```sh
-gst-launch-1.0 udpsrc multicast-group=224.1.1.1 auto-multicast=true port=5200 ! application/x-rtp,encoding-name=JPEG,payload=26 ! rtpjpegdepay ! jpegdec ! autovideosink
+gst-launch-1.0 udpsrc auto-multicast=true multicast-group=[MULTICAST-IP-WITHOUT-THESE-BRACKETS] port=[PORT-WITHOUT-THESE-BRACKETS] ! application/x-rtp,encoding-name=JPEG,payload=26 ! rtpjpegdepay ! jpegdec ! autovideosink sync=false
 ```
 
 ---
@@ -22,12 +22,12 @@ gst-launch-1.0 udpsrc multicast-group=224.1.1.1 auto-multicast=true port=5200 ! 
 ## 2. Sending to multiple predefined IP-addresses
 ### Raspberry Pi sending stream
 ```sh
-raspivid -n -t 0 -w 1640 -h 1232 -fps 40 -b 1700000 -o - | gst-launch-1.0 -v fdsrc ! h264parse ! rtph264pay config-interval=1 pt=96 ! multiudpsink clients=[CLIENT-IP-WITHOUT-THESE-BRACKETS]:[PORT-WITHOUT-THESE-BRACKETS]
+raspivid -w 1080 -h 1080 -b 25000000 -cd MJPEG -fps 40 -n -t 0 -o - | gst-launch-1.0 -v fdsrc ! "image/jpeg,width=1080,height=1080",framerate=40/1 ! jpegparse ! rtpjpegpay ! multiudpsink clients=[CLIENT-IP-WITHOUT-THESE-BRACKETS-SEPARATE-WITH-COMMA]:[PORT-WITHOUT-THESE-BRACKETS]
 ```
 
 ### Client receiving the stream
 ```sh
-gst-launch-1.0 udpsrc port=5200 ! application/x-rtp, payload=96 ! rtpjitterbuffer ! rtph264depay ! avdec_h264 ! autovideosink sync=false text-overlay=false
+gst-launch-1.0 udpsrc port=[PORT-WITHOUT-THESE-BRACKETS] ! application/x-rtp,encoding-name=JPEG,payload=26 ! rtpjpegdepay ! jpegdec ! autovideosink sync=false
 ```
 
 ---
@@ -35,12 +35,12 @@ gst-launch-1.0 udpsrc port=5200 ! application/x-rtp, payload=96 ! rtpjitterbuffe
 ## 3. Sending to one predefined IP-address
 ### Raspberry Pi sending stream
 ```sh
-raspivid -n -t 0 -w 1640 -h 1232 -fps 40 -b 1700000 -o - | gst-launch-1.0 -v fdsrc ! h264parse ! rtph264pay config-interval=1 pt=96 ! udpsink host=[CLIENT-IP-WITHOUT-THESE-BRACKETS] port=5200
+raspivid -w 1080 -h 1080 -b 25000000 -cd MJPEG -fps 40 -n -t 0 -o - | gst-launch-1.0 -v fdsrc ! "image/jpeg,width=1080,height=1080",framerate=40/1 ! jpegparse ! rtpjpegpay ! udpsink host=[CLIENT-IP-WITHOUT-THESE-BRACKETS] port=[PORT-WITHOUT-THESE-BRACKETS]
 ```
 
 ### Client receiving the stream
 ```sh
-gst-launch-1.0 udpsrc port=5200 ! application/x-rtp, payload=96 ! rtpjitterbuffer ! rtph264depay ! avdec_h264 ! autovideosink sync=false text-overlay=false
+gst-launch-1.0 udpsrc port=[PORT-WITHOUT-THESE-BRACKETS] ! application/x-rtp,encoding-name=JPEG,payload=26 ! rtpjpegdepay ! jpegdec ! autovideosink sync=false
 ```
 
 ---
@@ -48,12 +48,12 @@ gst-launch-1.0 udpsrc port=5200 ! application/x-rtp, payload=96 ! rtpjitterbuffe
 ## 4. Sending to one predefined IP-address and receiving with Python script
 ### Raspberry Pi sending stream
 ```sh
-raspivid -n -t 0 -w 1640 -h 1232 -fps 40 -b 1700000 -o - | gst-launch-1.0 -v fdsrc ! h264parse ! rtph264pay config-interval=1 pt=96 ! udpsink host=[CLIENT-IP-WITHOUT-THESE-BRACKETS] port=5200
+raspivid -w 1080 -h 1080 -b 25000000 -cd MJPEG -fps 40 -n -t 0 -o - | gst-launch-1.0 -v fdsrc ! "image/jpeg,width=1080,height=1080",framerate=40/1 ! jpegparse ! rtpjpegpay ! udpsink host=[CLIENT-IP-WITHOUT-THESE-BRACKETS] port=[PORT-WITHOUT-THESE-BRACKETS]
 ```
 
 ### Client receiving the stream
 ```sh
-python udp_stream-client.py
+python rpi-camera-udp-stream-client.py
 ```
 
 ---

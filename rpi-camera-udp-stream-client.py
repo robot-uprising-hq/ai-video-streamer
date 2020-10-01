@@ -32,9 +32,9 @@ class Video():
         self._frame = None
 
         self.video_source = 'udpsrc port={}'.format(self.port)
-        self.video_codec = '! application/x-rtp, payload=96 ! rtpjitterbuffer ! rtph264depay ! avdec_h264'
+        self.video_codec = '! application/x-rtp,encoding-name=JPEG,payload=26 ! rtpjpegdepay ! jpegdec'
         self.video_decode = \
-            '! decodebin ! videoconvert ! video/x-raw,format=(string)BGR ! videoconvert'
+            '! videoconvert ! video/x-raw,format=(string)BGR'
         self.video_sink_conf = \
             '! appsink emit-signals=true sync=false drop=true'
 
