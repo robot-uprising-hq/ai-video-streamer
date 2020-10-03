@@ -1,0 +1,16 @@
+# This file is a template file for 'wpa_supplicant.conf'-file
+# Make a copy of this file and name it 'wpa_supplicant.conf'
+# Put your wifi login information to that 'wpa_supplicant.conf'-file
+# The 'wpa_supplicant.conf'-file is in .gitignore so that your wifi
+# login information is not leaked to git.
+# Move the 'wpa_supplicant.conf'-file to Raspberry Pi's boot-partition
+# to automatically login to the wifi at startup
+
+country=FI
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+
+network={
+    ssid="put_your_wifi_name_here_inside_quotes"
+    psk="put_wifi_password_here_inside_quotes"
+}

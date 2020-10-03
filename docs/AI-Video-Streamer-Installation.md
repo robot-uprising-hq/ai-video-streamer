@@ -1,10 +1,10 @@
 ## Flashing SD-card and starting Raspberry Pi
 1. Install Raspberry Pi OS to your Raspberry Pi's SD-card.
-1. Open `boot`-section of the SD-card and type `touch ssh` in .terminal to create empty file called ssh. This opens ssh connection to Raspberry Pi.
+1. Open `boot`-section of the SD-card and type `touch ssh` in terminal to create empty file called `ssh`. The presence of this file starts the ssh server on Raspberry Pi and you can ssh into the Pi after boot.
+1. Rename `wpa_supplicant.conf_TEMPLATE` to `wpa_supplicant.conf` and fill in the `ssid` and `psk` of your WIFI. Move the `wpa_supplicant.conf`-file to the `boot`-section of the SD-card.
 1. Put in the Raspberry Pi Camera module to the Raspberry Pi.
 1. Start Raspberry Pi with the SD-card.
 1. Find Raspberry Pi's IP-address and log in. Default user is `pi` and password `raspberry`.
-
 
 ---
 ## Setting up Raspberry Pi
